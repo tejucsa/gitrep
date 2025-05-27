@@ -1,0 +1,74 @@
+Simple form:
+Program6->src>create file  SimpleForm.js
+
+import React, { useState } from "react";
+
+const SimpleForm = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!name || !email.includes("@") || password.length < 6) {
+      setError("Please enter valid details.");
+    } else {
+      setError("Successfully submitted");
+      console.log("Submitted:", { name, email, password });
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        placeholder="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <br />
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <br />
+      <input
+        type={showPassword ? "text" : "password"}
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <button type="button" onClick={() => setShowPassword(!showPassword)}>
+        {showPassword ? "Hide" : "Show"}
+      </button>
+      <br />
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
+export default SimpleForm;
+
+App.js:
+import logo from './logo.svg';
+import './App.css';
+
+import React from "react";
+import SimpleForm from "./SimpleForm"
+
+
+const App = () => {
+  return (
+    <div>
+      <SimpleForm/>
+
+    </div>
+  );
+};
+
+export default App;
